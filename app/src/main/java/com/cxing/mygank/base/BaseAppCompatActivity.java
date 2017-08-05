@@ -11,18 +11,18 @@ import butterknife.ButterKnife;
  * Created by zhao on 17-5-21.
  */
 
-public abstract class BaseAppCompactActivity extends AppCompatActivity {
+public abstract class BaseAppCompatActivity extends AppCompatActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
         setContentView(getLayoutId());
         ButterKnife.bind(this);
+
         initToolbar(savedInstanceState);
         initViews(savedInstanceState);
         initData();
         initListener();
-
     }
 
     protected abstract void initListener();

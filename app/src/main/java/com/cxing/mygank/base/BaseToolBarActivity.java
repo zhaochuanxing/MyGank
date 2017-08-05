@@ -16,7 +16,7 @@ import butterknife.Bind;
  * Created by zhao on 17-5-21.
  */
 
-public abstract class BaseToolBarActivity extends BaseAppCompactActivity{
+public abstract class BaseToolBarActivity extends BaseAppCompatActivity {
     @Bind(R.id.toolbar)
     protected Toolbar mToolbar;
     @Bind(R.id.app_bar_layout)
