@@ -26,7 +26,8 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activity.SceneryActivity">
+        <activity android:name=".activity.SceneryActivity"
+            android:theme="@style/sceneryTheme">
         </activity>
     </application>
 
