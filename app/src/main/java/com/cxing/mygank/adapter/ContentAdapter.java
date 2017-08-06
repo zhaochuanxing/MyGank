@@ -1,6 +1,7 @@
 package com.cxing.mygank.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.cxing.mygank.R;
+import com.cxing.mygank.activity.SceneryActivity;
 import com.cxing.mygank.bean.Scenery;
 
 import java.util.ArrayList;
@@ -76,14 +78,26 @@ public class ContentAdapter extends RecyclerView.Adapter {
 
         public final ImageView mPostImg;
         public final TextView mTitleTx;
+        private int mPosition;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             mPostImg = (ImageView)itemView.findViewById(R.id.img_poster);
             mTitleTx = (TextView)itemView.findViewById(R.id.tx_title);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, SceneryActivity.class);
+                    Scenery scenery = mSceneryList.get(mPosition);
+                    intent.putExtra(SceneryActivity.KEY_NAME,scenery.getName());
+                    intent.putExtra(SceneryActivity.KEY_IMG,scenery.getImgId());
+                    mContext.startActivity(intent);
+                }
+            });
         }
 
         public void setData(int position) {
+            this.mPosition = position;
             Scenery scenery = mSceneryList.get(position);
             mTitleTx.setText(scenery.getName());
             Glide.with(mContext).load(scenery.getImgId()).into(mPostImg);

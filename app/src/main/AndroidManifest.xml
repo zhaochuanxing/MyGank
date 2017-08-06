@@ -16,15 +16,17 @@
         android:supportsRtl="true"
         android:theme="@style/MyTheme">
         <activity android:name=".MainActivity">
-
         </activity>
-        <activity android:name=".activity.HomeActivity"
+        <activity
+            android:name=".activity.HomeActivity"
             android:label="每日干货">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+        <activity android:name=".activity.SceneryActivity">
         </activity>
     </application>
 
