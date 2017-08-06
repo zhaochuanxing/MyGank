@@ -6,6 +6,7 @@ import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -28,6 +29,8 @@ public class HomeActivity extends AppCompatActivity {
     private static final String TAG = HomeActivity.class.getSimpleName();
     private Toolbar mToolBar;
     private DrawerLayout mDrawerLayout;
+    private SwipeRefreshLayout mSwipeLayout;
+    private ContentAdapter contentAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,11 +75,42 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.recyclerview);
-        ContentAdapter contentAdapter = new ContentAdapter();
+        setContentData();
+    }
+
+    private void setContentData() {RecyclerView recyclerView = (RecyclerView)findViewById(R.id.recyclerview);
+        contentAdapter = new ContentAdapter();
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(contentAdapter);
+        mSwipeLayout = (SwipeRefreshLayout)findViewById(R.id.swipe_refresh);
+        mSwipeLayout.setColorSchemeResources(R.color.colorPrimary);
+        mSwipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshData();
+            }
+        });
+    }
+
+    private void refreshData() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        contentAdapter.refreshData();
+                        mSwipeLayout.setRefreshing(false);
+                    }
+                });
+            }
+        }).start();
     }
 
     @Override

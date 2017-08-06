@@ -30,7 +30,11 @@ public class ContentAdapter extends RecyclerView.Adapter {
 
     private List<Scenery> getSceneryList() {
         List<Scenery> sceneryList = new ArrayList<>();
-        for(int i=0;i<15;i++){
+        int start = 0;
+        if(mSceneryList!=null){
+            start = mSceneryList.size();
+        }
+        for(int i=start;i<start+8;i++){
             Scenery scenery = new Scenery("风景"+i, R.drawable.picture);
             sceneryList.add(scenery);
         }
@@ -60,6 +64,12 @@ public class ContentAdapter extends RecyclerView.Adapter {
             return mSceneryList.size();
         }
         return 0;
+    }
+
+    public void refreshData() {
+        List<Scenery> sceneryList = getSceneryList();
+        mSceneryList.addAll(sceneryList);
+        notifyDataSetChanged();
     }
 
     private class MyViewHolder extends RecyclerView.ViewHolder {
